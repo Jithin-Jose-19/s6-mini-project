@@ -1,50 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title>LOVS MITS</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="styles/login.css" />
-</head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      form {
+        border: 3px solid #f1f1f1;
+      }
 
-<body>
-    <!-- partial:index.partial.html -->
-    <div class="box-form">
-        <div class="left">
-            <div class="overlay">
-                <h1>Hello World.</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin
-                </p>
-                <span>
-            <p>login with social media</p>
-            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-            <a href="#"
-              ><i class="fa fa-twitter" aria-hidden="true"></i> Login with
-              Twitter</a
-            >
-          </span>
-            </div>
-        </div>
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
 
-        <div class="right">
-            <h5>Login</h5>
-            <div class="inputs">
-                <form action="/auth/login" method="post">
-                    <input type="email" name="email" placeholder="username" />
-                    <br />
-                    <input type="password " name="password" placeholder="password" />
-                    <input type="submit"  value="Sign in ">
-                </form>
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
 
-            </div>
-            <br /><br />
+      button:hover {
+        opacity: 0.8;
+      }
 
+      .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+      }
 
-        </div>
-    </div>
-    <!-- partial -->
-</body>
+      .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+      }
+
+      img.avatar {
+        width: 10%;
+        border-radius: 50%;
+      }
+
+      .container {
+        padding: 16px;
+      }
+
+      span.psw {
+        float: right;
+        padding-top: 16px;
+      }
+
+      /* Change styles for span and cancel button on extra small screens */
+      @media screen and (max-width: 300px) {
+        span.psw {
+          display: block;
+          float: none;
+        }
+        .cancelbtn {
+          width: 100%;
+        }
+      }
+    </style>
+    <title>MITS LOVS</title>
+  </head>
+  <body>
+    <form action="/auth/login" method="post">
+      <div class="imgcontainer">
+        <img
+          src="https://www.w3schools.com/howto/img_avatar2.png"
+          alt="Avatar"
+          class="avatar"
+        />
+      </div>
+
+      <div class="container">
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email Id" name="email" required />
+
+        <label for="password"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+        />
+
+        <button type="submit">Login</button>
+      </div>
+
+      <div class="container" style="background-color: #f1f1f1">
+       <a href="/"><button type="button" class="cancelbtn">Back to home</button></a>
+      </div>
+    </form>
+  </body>
 </html>

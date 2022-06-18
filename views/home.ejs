@@ -1,1 +1,45 @@
-<h1>Home</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylehome.css">
+    <title>MITS LOVS</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="Container">
+        <div class="nav">
+          <div class="logo">MITS LOVS</div>
+          <div class="menu">
+            <ul class="navMenu">
+              <li><a href="/">Home</a></li>
+              <!-- <li><a href="/auth/login">Login</a></li> -->
+              <% if (user) { %>
+                <% if (user.roleName === 'ADMIN') { %>
+                <li><a href="/admin/upload-faculty-student-details">Register-Students-&-Faculty</a></li>
+                <% } %>
+                <% if(user.roleName === 'STUDENT') { %> 
+                  <li><a href="/student/upload code">Upload code</a></li>
+                <% } %>
+                <% if(user.roleName === 'FACULTY') { %> 
+                  <li><a href="/faculty/grade-student">Grade Student</a></li>
+                <% } %>
+                <li><a href="/auth/logout">Logout</a></li>
+                <% } else { %>
+                <li><a href="/auth/login">Login</a></li>
+                <% } %>
+            </ul>
+          </div>
+        </div>
+        <div class="header">
+          <h1>Mits Lab Output Verification System</h1>
+          <p>
+            This is a web app to automate the lab output verification in Mits
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
