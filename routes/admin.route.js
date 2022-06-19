@@ -72,7 +72,7 @@ router.post('/register-faculty-student',async(req,res,next) => {
               obj.roleName = ("" + obj.roleName + "").trim().toUpperCase();
               obj.batchFrom = ("" + obj.batchFrom + "").trim();
               obj.batchTo = ("" + obj.batchTo + "").trim();
-              obj.className = ("" + obj.classname + "").trim();
+              obj.className = ("" + obj.className + "").trim();
             
               const doesExist = await User.findOne({ email : obj.email });
               if (!doesExist) {
