@@ -78,6 +78,8 @@ app.use(
   require("./routes/admin.route")
 );
 
+app.use("/student", require("./routes/student.route"));
+
 // 404 Handler
 app.use((req, res, next) => {
   next(createHttpError.NotFound());
@@ -152,3 +154,4 @@ function ensureAdmin(req, res, next) {
 //       res.redirect("/");
 //     }
 //   }
+
