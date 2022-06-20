@@ -8,12 +8,22 @@
     <link rel="stylesheet" href="/styleuploadcode.css" />
   </head>
   <body>
-    <div class="upload-wrapper">
-      <div class="upload-btn-wrapper">
-        <button class="btn">Upload Code</button>
-        <input type="file" name="myfile" />
-        <button class="sbt-btn">Submit</button>
-      </div>
-    </div>
+    <form id="codeUploadForm" action="/student/uploadCodeFile" method="post">
+      <textarea
+        id="code-txt-area"
+        name="code"
+        cols="150"
+        rows="30"
+        style="overflow: auto"
+        placeholder="paste your code here.."
+      >
+      </textarea>
+      <label for="code-extension">Choose language:</label>
+      <select name="code-extension" id="code-extension">
+        <option value="c">C</option>
+        <option value="java">Java</option>
+      </select>
+      <input type="submit" value="Submit" class="sbt-btn" />
+    </form>
   </body>
 </html>
