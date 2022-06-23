@@ -107,6 +107,7 @@ mongoose
   })
   .then(() => {
     console.log("Mongodb💾 connected...");
+    registerAdmin();
     app.listen(PORT, () =>
       console.log(`Server Running 🚩🚩🚩 @ http://localhost:${PORT}`)
     );
@@ -135,7 +136,6 @@ async function registerAdmin() {
     console.log(err);
   }
 }
-registerAdmin();
 
 function ensureAdmin(req, res, next) {
   if (req.user.roleName === roles.admin) {
