@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/styleuploadcode.css" />
+  </head>
+  <body>
+    <form id="codeUploadForm" action="/student/uploadCodeFile" method="post">
+      <textarea
+        id="code-txt-area"
+        name="code"
+        cols="150"
+        rows="30"
+        style="overflow: auto"
+        placeholder="paste your code here.."
+      >
+      </textarea>
+      <label for="code-extension">Choose language:</label>
+      <select name="code-extension" id="code-extension">
+        <option value="c">C</option>
+        <option value="java">Java</option>
+      </select>
+      <input type="submit" value="Submit" class="sbt-btn" />
+    </form>
+  </body>
+</html>
