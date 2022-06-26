@@ -7,11 +7,10 @@ const request = require("request");
 router.get("/upload-code", (req, res, next) => {
   res.render("uploadCode");
 });
-router.post("/uploadCodeFile", (req, res, next) => {
-  var code = req.body.code;
-  //code=code.replace(/(\r\n|\n|\r)/gm,"");
 
-  var program = {
+router.post("/upload-code", (req, res, next) => {
+  let code = req.body.code;
+  let program = {
     script: code,
     language: "c",
     stdin:"3 5",
@@ -29,7 +28,7 @@ router.post("/uploadCodeFile", (req, res, next) => {
       method: "POST",
       json: program,
     },
-    function (error, response, body) {
+    (error, response, body) => {
       console.log("Error:", error);
       console.log("StatusCode:", response && response.statusCode);
       console.log("Body:", body);
@@ -37,4 +36,5 @@ router.post("/uploadCodeFile", (req, res, next) => {
   );
   res.render("uploadCode");
 });
+
 module.exports = router;

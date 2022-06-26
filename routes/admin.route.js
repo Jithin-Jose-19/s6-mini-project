@@ -3,7 +3,18 @@ const xlsx = require("xlsx");
 const mongoose = require("mongoose");
 const User = require("../models/user.model");
 const path = require("path");
-const fs = require("fs");
+
+router.get('/batch-upload',async(req,res,next) => {
+  try{
+    res.render('batch-upload');
+  }catch(error){
+    next(error);
+  }
+});
+
+router.post('/batch-upload',async(req,res,next) => {
+
+});
 
 router.get("/upload-faculty-student-details", async (req, res, next) => {
   try {
