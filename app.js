@@ -80,6 +80,7 @@ app.use(
 );
 
 app.use("/student", require("./routes/student.route"));
+app.use("/faculty", require("./routes/faculty.route"));
 
 // 404 Handler
 app.use((req, res, next) => {
