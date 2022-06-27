@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Infinite Scroll Example</title>
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+</head>
+<style>
+    body {
+  overflow-y: hidden;
+}
+
+#top-section {
+  margin-left: 8px;
+}
+
+#items-container {
+  overflow-y: scroll;
+  height: 400px;
+}
+
+#items-container > .list {
+  background: darkslategrey;
+  padding: 8px 8px;
+}
+
+#items-container .list li {
+  background: grey;
+  color: white;
+  margin-bottom: 18px;
+}
+</style>
+<body>
+  <!-- Really Simple Example -->
+  <div id="top-section">
+    <h4 class="display-4">List of Experiments</h4>
+    <hr/>
+    <div id="info">Total Items: 0</div>
+  </div>
+  <div id="items-container" class="border" onscroll="scrollHandler()">
+    <ul class="list"></ul>
+    <ul class="pagination" hidden></ul>
+  </div>
+</body>
+<script>
+    /* ===============================================================================
+// Setup with list.js
+// =============================================================================*/
+let itemList;               // Set when the page is loaded.
+const itemsPerPage = 14;     // Total number of items you want to render on each page
+
+window.addEventListener("load", () => {
+  itemList = new List("items-container", {
+    pagination: true,       // Required for pagination to work
+    page: itemsPerPage,     // Items per page
+    valueNames: [           // Properties to extract from JSON object and be inserted into our item template below
+      "name",
+      { name: "link", attr: "href" },
+    ],
+    item: `<li>
+            <div class="media-body">
+                <a class="link" href="" target="_blank"><div class="name display-6 mt-2 mb-1"></div></a>
+            <div class="mt-auto">
+              <div class="category badge badge-primary"></div> 
+              <div class="subcategory badge badge-secondary"></div>
+            </div>
+        
+        </div> 
+      </li>`,
+  });
+
+  // Load items (see bottom of page to view the items)
+  itemList.add(items, () => {
+    $("#info").text(`Total Items: ${itemList.items.length}`);
+  });
+});
+
+
+/* ===============================================================================
+// Infinite Pagination ｖ(⌒ｏ⌒)ｖ
+// =============================================================================*/
+let scrolling = false;      // Current state (are we currently scrolling or not?)
+let page = 1;               // Starting page
+const scrollThrottle = 250; // Interval between scroll checks.
+
+// Event which is binded to the unordered list element's onscroll event.
+// Simply updates the current state.
+function scrollHandler() {
+  scrolling = true;
+}
+
+// Infinite Scroll with Pagination
+setInterval(() => {
+  // Only bother checking if we can load next page items if the user is currently scrolling
+  if (scrolling) {
+    const container = $("#items-container");
+    const containerPosY = container.height(); // Y position of the container top
+    const scrollPosY = container.scrollTop(); // Scroll position Y
+
+    const containerList = $("#items-container > .list");    // The actual list containing the items
+    const containerListY = containerList.height();          // Container list height size
+
+    const offsetY = 15;                                     // Distance from bottom or top that is considered within range to
+                                                            // items on the next page
+
+    // Can paginate, near the bottom of the list of items
+    if (scrollPosY + containerPosY > containerListY - offsetY) {
+      console.log("REACHED BOTTOM! Loading More Items!");
+      page++;
+      itemList.show(0, page * itemsPerPage);
+    }
+    // Near the top of the list (not used for infinite scroll, but
+    // if you need to do something here, feel free to...)
+    else if (scrollPosY + containerPosY < containerPosY + offsetY) {
+      console.log("REACHED TOP!");
+      // Do stuff
+    }
+
+    scrolling = false;
+  }
+}, scrollThrottle);
+
+
+/* ===============================================================================
+// Random Data
+// =============================================================================*/
+const items = [
+  {
+    name: "Iroha Isshiki",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Elden Ring",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Dark Souls",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Bioshock",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Kirby",
+    link: "https://www.google.com",
+  },
+  {
+    name: "ICE +Caffeine",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Demon Slayer",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Deadmau5",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Daft Punk",
+    link: "https://www.google.com",
+  },
+  {
+    name: "League of Legends",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Mark Zuckerberg",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Nhato",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Python",
+    link: "https://www.google.com",
+  },
+  {
+    name: "Tik Tok",
+    link: "https://www.google.com",
+  },
+  
+];
+
+</script>
+</html>

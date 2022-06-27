@@ -4,6 +4,9 @@ const path = require("path");
 const app = express();
 const request = require("request");
 
+router.get("",(req,res,next)=>{
+  res.render("studentHome")
+})
 router.get("/upload-code", (req, res, next) => {
   res.render("uploadCode");
 });
