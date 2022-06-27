@@ -25,16 +25,15 @@
       </select>
       <input type="submit" value="Submit" class="sbt-btn" />
     </form>
-    <h3>Test Cases</h3>
+
     <% if (typeof testCaseResult !== 'undefined') { %>
+    <h3>Test Cases</h3>
     <div class="container space-between">
       <div id="t1" x>Test Case 1 : <%= testCaseResult.t1 %></div>
       <div>Test Case 2 : <%= testCaseResult.t2 %></div>
       <div>Test Case 3 : <%= testCaseResult.t3 %></div>
     </div>
-    <% } else{ %>  
-      <h1>bar</h1>
-   <% }%>
+    <% }%>
   </body>
   <script>
     function validateTestCases() {
