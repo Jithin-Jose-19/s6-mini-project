@@ -38,6 +38,12 @@ router.post("/uploadCodeFile", (req, res, next) => {
       console.log("Body:", body);
     }
   );
-  res.render("uploadCode");
+  const testCaseResult = {
+    t1: '\u274C',
+    t2: '\u2705',
+    t3: '\u274C'
+}
+  
+  res.render("uploadCode",{testCaseResult:testCaseResult});
 });
 module.exports = router;
