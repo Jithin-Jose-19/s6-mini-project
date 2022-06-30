@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const request = require("request");
 const uploadedCodeModel = require("../models/UploadedCode.model");
-const axios = require('axios').default;
+const axios = require("axios").default;
 
 router.get("", (req, res, next) => {
   res.render("studentHome");
@@ -20,7 +20,7 @@ router.post("/uploadCodeFile", (req, res, next) => {
     ["4 2", "6"],
     ["8 6", "14"],
   ]);
-  var testCasePassed = [0,0,0];
+  var testCasePassed = [0, 0, 0];
   var i = 0;
   ioMap.forEach(function (value, key) {
     var program = {
@@ -32,63 +32,56 @@ router.post("/uploadCodeFile", (req, res, next) => {
       clientSecret:
         "383e2dfeefc95027783c6ec540d551b031d685d7f574132c110025efec5a407b",
     };
-    
-    axios.post('https://api.jdoodle.com/v1/execute',program).then(function (response){
-      console.log(response.data['output']);
-      if (response.data['output'] == value) {
-        console.log("output : ",response.data['output']);
-        console.log("Value : ",value);
-       testCasePassed[i] = 1;
-      }else 
-      testCasePassed[i]=0;
-      i++;
-      const tMark=new Map([
-        [0,"\u274c"],
-        [1,"\u2705"],
-      ])
-      if(i==3){
-      var testCaseResult = {
-        t1: tMark.get(testCasePassed[0]),
-        t2: tMark.get(testCasePassed[1]),
-        t3: tMark.get(testCasePassed[2]),
-      };
-      
-      console.log(testCaseResult);
-      res.render("uploadCode", { testCaseResult: testCaseResult });
-    }
-    }).catch(function (error) {
-      console.log(error);
-    });
-    
-    
-        
-      }
-     );
+
+    axios
+      .post("https://api.jdoodle.com/v1/execute", program)
+      .then(function (response) {
+        console.log(response.data["output"]);
+        if (response.data["output"] == value) {
+          console.log("output : ", response.data["output"]);
+          console.log("Value : ", value);
+          testCasePassed[i] = 1;
+        } else testCasePassed[i] = 0;
+        i++;
+        const tMark = new Map([
+          [0, "\u274c"],
+          [1, "\u2705"],
+        ]);
+        if (i == 3) {
+          var testCaseResult = {
+            t1: tMark.get(testCasePassed[0]),
+            t2: tMark.get(testCasePassed[1]),
+            t3: tMark.get(testCasePassed[2]),
+          };
+
+          console.log(testCaseResult);
+          res.render("uploadCode", { testCaseResult: testCaseResult });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   });
+});
 
+//uploading code to database
 
-  
+// var uploadedCodeData = new uploadedCodeModel({
+//   email: "19cs201@mgist.ac.in",
+//   courseCode: "CST-301",
+//   code: code,
+//   language: "c",
+//   experimentNumber: "1",
+//   batchFrom: "2019",
+//   batchTo: "2023",
+//   className: "CSE",
+// });
 
-  //uploading code to database
-
-  // var uploadedCodeData = new uploadedCodeModel({
-  //   email: "19cs201@mgist.ac.in",
-  //   courseCode: "CST-301",
-  //   code: code,
-  //   language: "c",
-  //   experimentNumber: "1",
-  //   batchFrom: "2019",
-  //   batchTo: "2023",
-  //   className: "CSE",
-  // });
-
-  // uploadedCodeData.save((err, doc) => {
-  //   if (!err) {
-  //     req.flash("success", "Code uploaded successfully!");
-  //   } else console.log("Error during record insertion : " + err);
-  // });
-
-  
+// uploadedCodeData.save((err, doc) => {
+//   if (!err) {
+//     req.flash("success", "Code uploaded successfully!");
+//   } else console.log("Error during record insertion : " + err);
+// });
 
 module.exports = router;
 
