@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>courses</title>
+    <link rel="stylesheet" href="/style-course-select.css" />
+  </head>
+  <body>
+    <a href="/" style="color:white">Back to home</a>
+    <div class="container">
+      <h2>COURSES</h2>
+      <form action="/student/course-select" method="post">
+        <div class="select-box">
+          <div class="options-container">
+            <% docs.forEach((doc,i) => { %>
+              <div class="option">
+                <input type="radio" class="radio" id="<%= "course" + (i+1) %>" name="category" value="<%= doc.courseCode %> "/>
+                <label for="<%= "course" + (i+1) %>"><%= doc.courseCode.toUpperCase() + " - " + doc.courseName %> </label>
+              </div>
+            <% }) %> 
+          </div>
+          <div class="selected">
+            Select course
+          </div>
+        </div>
+        <input type="submit" value="submit">
+      </form>
+    </div>
+    <script>
+        const selected = document.querySelector(".selected");
+        const optionsContainer = document.querySelector(".options-container");
+        const optionsList = document.querySelectorAll(".option");
+
+        selected.addEventListener("click", () => {
+            optionsContainer.classList.toggle("active");
+        });
+
+        optionsList.forEach(o => {
+        o.addEventListener("click", () => {
+        selected.innerHTML = o.querySelector("label").innerHTML;
+        optionsContainer.classList.remove("active");
+        });
+        });
+    </script>
+  </body>
+</html>
