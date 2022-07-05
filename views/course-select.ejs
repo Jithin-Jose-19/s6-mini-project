@@ -13,15 +13,15 @@
       <h2>COURSES</h2>
       <form action="/student/course-select" method="post">
         <div class="select-box">
-          <div class="options-container">
+          <div class="options-container course-options">
             <% docs.forEach((doc,i) => { %>
-              <div class="option">
-                <input type="radio" class="radio" id="<%= "course" + (i+1) %>" name="category" value="<%= doc.courseCode %> "/>
+              <div class="option course-option">
+                <input type="radio" class="radio" id="<%= "course" + (i+1) %>" name="category" value="<%= doc.courseCode %>"/>
                 <label for="<%= "course" + (i+1) %>"><%= doc.courseCode.toUpperCase() + " - " + doc.courseName %> </label>
               </div>
             <% }) %> 
           </div>
-          <div class="selected">
+          <div class="course-selected selected">
             Select course
           </div>
         </div>
@@ -29,20 +29,28 @@
       </form>
     </div>
     <script>
-        const selected = document.querySelector(".selected");
-        const optionsContainer = document.querySelector(".options-container");
-        const optionsList = document.querySelectorAll(".option");
-
-        selected.addEventListener("click", () => {
-            optionsContainer.classList.toggle("active");
-        });
-
-        optionsList.forEach(o => {
+      const courseSelected = document.querySelector(".course-selected");
+      const courseOptionsContainer = document.querySelector(".course-options");
+      const courseOptionsList = document.querySelectorAll(".course-option");
+      courseSelected.addEventListener("click", () => {
+        courseOptionsContainer.classList.toggle("active");
+      });
+      
+      courseOptionsList.forEach((o) => {
         o.addEventListener("click", () => {
-        selected.innerHTML = o.querySelector("label").innerHTML;
-        optionsContainer.classList.remove("active");
+          courseOptionsContainer.classList.remove("active");
         });
+      });
+
+      const courseOptions = document.getElementsByName("category");
+      courseOptions.forEach((item) => {
+        item.addEventListener("click", () => {
+          if (item.checked) {
+            document.querySelector(".course-selected").innerText = item.nextElementSibling.innerText;
+            courseOptionsContainer.classList.remove("active");
+          }
         });
+      });
     </script>
   </body>
 </html>

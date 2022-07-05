@@ -16,9 +16,8 @@
     
     <ol class="list list-view-filter">
       <% experiments.forEach(experiment => { %>
-        <li><a href="#"><%= experiment.experimentNumber + " - " + experiment.experimentName %> </a></li>
+        <li><a href="/student/upload-code">Experiment <%= experiment.experimentNumber + " - " + experiment.experimentName %> </a></li>
       <% }) %> 
-      
     </ol>
       <script src="/js/list.js"></script>
     </body>
