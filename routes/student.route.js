@@ -12,34 +12,44 @@ router.get("/upload-code", (req, res, next) => {
   res.render("uploadCode");
 });
 
-router.get('/course-select',async(req,res,next) => {
+router.get("/course-select", async (req, res, next) => {
   try {
     console.log(req.user);
-    const docs = await Course.find({batchFrom : req.user.batchFrom , batchTo : req.user.batchTo , classes : `${req.user.className}`})
-    docs.forEach(doc => {
-      console.log(doc.courseCode + " - " + doc.courseName) 
-    })
-    res.render('course-select',{docs})
+    const docs = await Course.find({
+      batchFrom: req.user.batchFrom,
+      batchTo: req.user.batchTo,
+      classes: `${req.user.className}`,
+    });
+    docs.forEach((doc) => {
+      console.log(doc.courseCode + " - " + doc.courseName);
+    });
+    res.render("course-select", { docs });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
-router.post('/course-select', async(req,res,next) => {
-   console.log(req.body);
-   const doc = await Experiment.findOne({courseCode :`${req.body.category.trim()}`})
-   doc.experiments.forEach(experiment => {
-    console.log(experiment.experimentName);
-   })
-   res.render("student-experiment-select",{experiments : doc.experiments})
-})
+router.post("/course-select", async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const doc = await Experiment.findOne({
+      courseCode: `${req.body.category.trim()}`,
+    });
+    doc.experiments.forEach((experiment) => {
+      console.log(experiment.experimentName);
+    });
+    res.render("student-experiment-select", { experiments: doc.experiments });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post("/upload-code", (req, res, next) => {
   let code = req.body.code;
   let program = {
     script: code,
     language: "c",
-    stdin:"3 5",
+    stdin: "3 5",
     versionIndex: "0",
     clientId: "10b08afe3f797dcd5f7df7af153f8b01",
     clientSecret:
