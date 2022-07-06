@@ -10,6 +10,8 @@
   </head>
   <body>
     <form id="codeUploadForm" action="/student/uploadCodeFile" method="post">
+      <input type="hidden" name="selectedCourse" value="<%= obj.selectedCourse  %> ">
+      <input type="hidden" name="experimentNumber" value="<%= obj.experimentNumber  %> ">
       <textarea
         id="code-txt-area"
         name="code"
@@ -20,7 +22,7 @@
       >
       </textarea>
       <label for="code-extension">Choose language:</label>
-      <select name="code-extension" id="code-extension">
+      <select name="language" id="code-extension">
         <option value="c">C</option>
         <option value="java">Java</option>
       </select>

@@ -7,7 +7,6 @@ const UploadedCodeSchema = new mongoose.Schema({
     type: String,
     required: true,
     lowercase: true,
-    unique: true,
   },
  courseCode:{
     type:String,

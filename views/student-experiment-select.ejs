@@ -13,12 +13,17 @@
       <div class="grid-view-button"><i class="fa fa-th-large" aria-hidden="true"></i> Grid view</div>
       <div class="grid-view-button" style="margin-left : 10px;"><a class=""grid-view-button" style="text-decoration : none; color:rgb(255, 255, 255);"href="/">Back to home</a></div>
     </div>
-    
+    <h2>Selected Course : <%= selectedCourseCode.toUpperCase() + " - " + selectedCourseName %> </h2>
     <ol class="list list-view-filter">
-      <% experiments.forEach(experiment => { %>
-        <li><a href="/student/upload-code">Experiment <%= experiment.experimentNumber + " - " + experiment.experimentName %> </a></li>
-      <% }) %> 
-    </ol>
-      <script src="/js/list.js"></script>
+      <form action="/student/upload-code" id="myForm">
+        <input type="hidden" name="selectedCourse" value="<%= selectedCourseCode %> ">
+        <% experiments.forEach(experiment => { %>
+          <li>Experiment <%= experiment.experimentNumber + " - " + experiment.experimentName %>
+          <input name="experimentNumber" type="hidden" value="<%= experiment.experimentNumber  %> "></li>
+        <% }) %> 
+      </form>
+    </ol> 
+      <script src="/js/list.js">
+      </script>
     </body>
     </html>
