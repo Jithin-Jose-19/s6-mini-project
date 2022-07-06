@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    input[type="submit"] {
+      float: right;
+      width: 20%;
+      background-color: #4caf50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    /* 
+    #test1div {
+        border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 10px;
+      float: left;
+      width: 25%;
+      height: 250px;
+    }
+    #test2div {
+      float: left;
+      width: 25%;
+      height: 250px;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 10px;
+    }
+    #test3div {
+      float: left;
+      width: 25%;
+      height: 250px;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 10px;
+    } */
+    #testSubmitBtn {
+      width: 25%;
+      margin: 10px 35%;
+    }
+  </style>
+  <body>
+    <div id="test1div">
+      <h3>Test Case 1</h3>
+      <form action="/action_page.php">
+        <label for="test2input">Input</label>
+        <textarea
+          id="test1input"
+          name="test1input"
+          cols="40"
+          rows="3"
+          style="overflow: auto"
+          placeholder="Type input here.."
+        >
+        </textarea>
+        <label for="test1output">Output</label>
+        <textarea
+          id="test1output"
+          name="test1output"
+          cols="40"
+          rows="3"
+          style="overflow: auto"
+          placeholder="Type output here.."
+        >
+        </textarea>
+      </form>
+    </div>
+
+    <div id="test2div">
+      <h3>Test Case 2</h3>
+      <form action="/action_page.php">
+        <label for="test2input">Input</label>
+        <textarea
+          id="test2input"
+          name="test2input"
+          cols="40"
+          rows="3"
+          style="overflow: auto"
+          placeholder="Type input here.."
+        >
+        </textarea>
+
+        <label for="test2output">Output</label>
+        <textarea
+          id="test2output"
+          name="test2output"
+          cols="40"
+          rows="3"
+          style="overflow: auto"
+          placeholder="Type output here.."
+        >
+        </textarea>
+      </form>
+    </div>
+
+    <div id="test3div">
+      <h3>Test Case 3</h3>
+      <form action="/action_page.php">
+        <label for="test1input">Input</label>
+        <textarea
+          id="test3input"
+          name="test3input"
+          cols="40"
+          rows="3"
+          style="overflow: auto"
+          placeholder="Type input here.."
+        >
+        </textarea>
+
+        <label for="test3output">Output</label>
+        <textarea
+          id="test3output"
+          name="test3output"
+          cols="40"
+          rows="3"
+          style="overflow: auto"
+          placeholder="Type output here.."
+        >
+        </textarea>
+      </form>
+    </div>
+
+    <input type="submit" value="Submit" id="testSubmitBtn" />
+  </body>
+</html>
