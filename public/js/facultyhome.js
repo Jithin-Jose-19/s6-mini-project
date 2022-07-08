@@ -86,6 +86,56 @@ $(document).ready(function () {
 
   function courseSelected(){
     console.log("Selected Course  : "+this.textContent);
+    $(".open-dropdown .custom-select").val(this.textContent);
+    (async () => {
+      const response = await fetch("http://localhost:3000/faculty/getExperiments", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({courseCode:this.textContent}),
+      });
+      const body = await response.json();
+      console.log("Experiments : "+body);
+      var ul = document.getElementById("experiment-list");
+      while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+      }
+      body.forEach((element) => {
+        element['experiments'].forEach((exp)=>{
+          console.log(exp['experimentName']);
+        
+        let numberSpan = document.createElement("span");
+        numberSpan.className="number";
+        numberSpan.textContent = exp['experimentNumber'];
+
+        let nameSpan = document.createElement("span");
+        nameSpan.className="name";
+        nameSpan.textContent = exp['experimentName'];
+
+        let gearSpan = document.createElement("span");
+        gearSpan.className="gearicon";
+        let geara=document.createElement("a");
+        geara.style="color:inherit;"
+        geara.href="/faculty/testcasesetup";
+        let geari=document.createElement("i");
+        geari.innerHTML ="&#xf013;";
+        geari.style="font-size:24px";
+        geari.className="fa";
+       
+        //span.onclick = courseSelected;
+        var li = document.createElement("li");
+       li.appendChild(numberSpan);
+        li.appendChild(nameSpan);
+        geara.appendChild(geari)
+        gearSpan.appendChild(geara);
+        li.appendChild(gearSpan);
+        ul.appendChild(li);
+        })
+        
+      });
+    })();
   }
   // close when click on Body
   $("html").click(function (event) {
@@ -94,3 +144,4 @@ $(document).ready(function () {
     }
   });
 });
+
