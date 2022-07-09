@@ -53,7 +53,7 @@ router.post("/uploadCodeFile", (req, res, next) => {
   let obj = {};
   obj["experimentNumber"] = req.body.experimentNumber.trim();
   obj["courseCode"] = req.body.selectedCourse.trim();
-  obj["code"] = req.body.code;
+  obj["code"] = req.body.code.trim();
   obj["language"] = req.body.language;
   obj["email"] = req.user.email;
   obj["batchFrom"] = req.user.batchFrom;
@@ -108,7 +108,10 @@ router.post("/uploadCodeFile", (req, res, next) => {
             codeObj.save();  
           }
           console.log(testCaseResult);
-          res.render("uploadCode", { testCaseResult: testCaseResult });
+          let obj1 = {}
+          obj1["selectedCourse"] = req.body.selectedCourse.trim();
+          obj1["experimentNumber"] = req.body.experimentNumber.trim();
+          res.render("uploadCode", { testCaseResult: testCaseResult , obj : obj1 });
         }
       })
       .catch(function (error) {
