@@ -68,19 +68,14 @@ app.use(
 app.use("/", require("./routes/index.route"));
 app.use("/auth", require("./routes/auth.route"));
 app.use(
-  "/user",
-  ensureLoggedIn({ redirectTo: "/auth/login" }),
-  require("./routes/user.route")
-);
-app.use(
   "/admin",
   ensureLoggedIn({ redirectTo: "/auth/login" }),
   ensureAdmin,
   require("./routes/admin.route")
 );
 
-app.use("/student", require("./routes/student.route"));
-app.use("/faculty", require("./routes/faculty.route"));
+app.use("/student" , ensureLoggedIn({ redirectTo: "/auth/login"}) , require("./routes/student.route"));
+app.use("/faculty" , ensureLoggedIn({ redirectTo: "/auth/login"}) , require("./routes/faculty.route"));
 
 // 404 Handler
 app.use((req, res, next) => {
