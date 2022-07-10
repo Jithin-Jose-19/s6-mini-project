@@ -18,7 +18,9 @@ const ExperimentSchema = new mongoose.Schema({
     testCase1 : String,
     expectedOutput1 : String,
     testCase2 : String,
-    expectedOutput2 : String
+    expectedOutput2 : String,
+    testCase3 : String,
+    expectedOutput3 : String
   }]
 });
 
