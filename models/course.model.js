@@ -25,6 +25,11 @@ const CourseSchema = new mongoose.Schema({
     lowercase: true,
     required : true,
   },
+  totalMarks : {
+    type: String,
+    lowercase: true,
+    required : true,
+  }
 });
 
 const Course = mongoose.model('course', CourseSchema);

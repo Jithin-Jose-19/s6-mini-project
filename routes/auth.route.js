@@ -1,9 +1,7 @@
-const router = require("express").Router();
-const User = require("../models/user.model");
-const { body, validationResult } = require("express-validator");
+const router = require("express").Router(); 
 const passport = require("passport");
 const { ensureLoggedOut, ensureLoggedIn } = require("connect-ensure-login");
-const { registerValidator } = require("../utils/validators");
+
 
 router.get(
   "/login",
