@@ -36,7 +36,7 @@
         
         
          <% expStuds.forEach(expStud => { %>
-            <li>
+            <li onclick="viewCode('<%=expStud.id%>')">
                 <span class="name"><%= expStud.email %></span>
              
               </li>
@@ -49,5 +49,10 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/js/facultyhome.js"></script>
+    <script>
+        function viewCode(id){
+            window.location="/faculty/submitted-students/view-code?id="+id;
+        }
+    </script>
   </body>
 </html>

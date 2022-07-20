@@ -133,8 +133,20 @@ router.get("/submitted-students", async (req, res, next) => {
 console.log(error);
 res.render("submittedStudentsPage");
   }
-  
-  
 });
+
+router.get("/submitted-students/view-code", async (req, res, next) => {
+ 
+  try{
+    const doc = await UploadedCodeModel.findById(req.query.id);
+
+      console.log(doc);
+    
+    res.render("viewCodePage",{codeDet:doc});
+  }catch(error){
+console.log(error);
+res.render("viewCodePage");
+}
+  });
 
 module.exports = router;
