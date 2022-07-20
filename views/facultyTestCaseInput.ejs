@@ -13,7 +13,6 @@
       cursor: pointer;
     }
 
-
     input[type="submit"]:hover {
       background-color: #45a049;
     }
@@ -58,6 +57,7 @@
       <h3>Test Case 1</h3>
       <form action="/action_page.php">
         <label for="test2input">Input</label>
+
         <textarea
           id="test1input"
           name="test1input"
@@ -65,7 +65,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type input here.."
-        >
+        ><%= test1input %> 
         </textarea>
         <label for="test1output">Output</label>
         <textarea
@@ -75,7 +75,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type output here.."
-        >
+        ><%= test1Output %> 
         </textarea>
       </form>
     </div>
@@ -91,7 +91,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type input here.."
-        >
+        ><%= test2input %> 
         </textarea>
 
         <label for="test2output">Output</label>
@@ -102,7 +102,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type output here.."
-        >
+        ><%= test2Output %> 
         </textarea>
       </form>
     </div>
@@ -118,7 +118,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type input here.."
-        >
+        ><%= test3input %> 
         </textarea>
 
         <label for="test3output">Output</label>
@@ -129,7 +129,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type output here.."
-        >
+        ><%= test3Output %> 
         </textarea>
       </form>
     </div>

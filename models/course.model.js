@@ -25,7 +25,22 @@ const CourseSchema = new mongoose.Schema({
     lowercase: true,
     required : true,
   },
-  totalMarks : {
+  attendanceTotalMarks : {
+    type: String,
+    lowercase: true,
+    required : true,
+  },
+  ceTotalMarks : {
+    type: String,
+    lowercase: true,
+    required : true,
+  },
+  caTotalMarks : {
+    type: String,
+    lowercase: true,
+    required : true,
+  },
+  vivaTotalMarks : {
     type: String,
     lowercase: true,
     required : true,

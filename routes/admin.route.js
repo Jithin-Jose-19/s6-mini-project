@@ -131,62 +131,73 @@ router.post("/course-upload", async (req, res, next) => {
       await file.mv(savePath);
       let wb = xlsx.readFile(savePath, { sheetRows: 1 });
 
-      for (let i = 0; i < 4; i++) {
-        const sheetName = wb.SheetNames[i];
-        let sheetValue = wb.Sheets[sheetName];
+      const sheetName = wb.SheetNames[0];
+      let sheetValue = wb.Sheets[sheetName];
 
-        //reading the headers of excel sheet and storing in columnsArray
-        const columnsArray = xlsx.utils.sheet_to_json(sheetValue, {
-          header: 1,
-        })[0];
-        console.log(columnsArray);
+      //reading the headers of excel sheet and storing in columnsArray
+      const columnsArray = xlsx.utils.sheet_to_json(sheetValue, {
+        header: 1,
+      })[0];
+      console.log(columnsArray);
 
-        //reading the excel body and we get an array of objects
-        wb = xlsx.readFile(savePath);
-        sheetValue = wb.Sheets[sheetName];
-        let excelData = xlsx.utils.sheet_to_json(sheetValue);
+      //reading the excel body and we get an array of objects
+      wb = xlsx.readFile(savePath);
+      sheetValue = wb.Sheets[sheetName];
+      let excelData = xlsx.utils.sheet_to_json(sheetValue);
 
-        excelData.forEach(async (obj) => {
-          obj["batchFrom"] = obj[`${columnsArray[0]}`];
-          delete obj[`${columnsArray[0]}`];
-          obj["batchTo"] = obj[`${columnsArray[1]}`];
-          delete obj[`${columnsArray[1]}`];
-          obj["classes"] = obj[`${columnsArray[2]}`].split(",");
-          // delete obj[`${columnsArray[2]}`];
-          obj["courseCode"] = obj[`${columnsArray[3]}`];
-          delete obj[`${columnsArray[3]}`];
-          obj["courseName"] = obj[`${columnsArray[4]}`];
-          delete obj[`${columnsArray[4]}`];
-          obj["totalMarks"] = obj[`${columnsArray[5]}`];
-          delete obj[`${columnsArray[5]}`];
+      excelData.forEach(async (obj) => {
+        obj["batchFrom"] = obj[`${columnsArray[0]}`];
+        delete obj[`${columnsArray[0]}`];
+        obj["batchTo"] = obj[`${columnsArray[1]}`];
+        delete obj[`${columnsArray[1]}`];
+        obj["classes"] = obj[`${columnsArray[2]}`].split(",");
+        // delete obj[`${columnsArray[2]}`];
+        obj["courseCode"] = obj[`${columnsArray[3]}`];
+        delete obj[`${columnsArray[3]}`];
+        obj["courseName"] = obj[`${columnsArray[4]}`];
+        delete obj[`${columnsArray[4]}`];
+        obj["attendanceTotalMarks"] = obj[`${columnsArray[5]}`];
+        delete obj[`${columnsArray[5]}`];
+        obj["ceTotalMarks"] = obj[`${columnsArray[6]}`];
+        delete obj[`${columnsArray[6]}`];
+        obj["caTotalMarks"] = obj[`${columnsArray[7]}`];
+        delete obj[`${columnsArray[7]}`];
+        obj["vivaTotalMarks"] = obj[`${columnsArray[8]}`];
+        delete obj[`${columnsArray[8]}`];
 
-          obj.courseName = ("" + obj.courseName + "").trim();
-          obj.batchFrom = ("" + obj.batchFrom + "").trim();
-          obj.batchTo = ("" + obj.batchTo + "").trim();
-          obj.courseCode = ("" + obj.courseCode + "").trim();
-          obj.totalMarks = ("" + obj.totalMarks + "").trim();
-          console.log(obj);
+        obj.courseName = ("" + obj.courseName + "").trim();
+        obj.batchFrom = ("" + obj.batchFrom + "").trim();
+        obj.batchTo = ("" + obj.batchTo + "").trim();
+        obj.courseCode = ("" + obj.courseCode + "").trim();
+        obj.attendanceTotalMarks = ("" + obj.attendanceTotalMarks + "").trim();
+        obj.ceTotalMarks = ("" + obj.ceTotalMarks + "").trim();
+        obj.caTotalMarks = ("" + obj.caTotalMarks + "").trim();
+        obj.vivaTotalMarks = ("" + obj.vivaTotalMarks + "").trim();
 
-          const doesExist = await Course.findOne({
-            courseCode: obj.courseCode,
-          });
-          if (!doesExist) {
-            const course = new Course(obj);
-            await course.save();
-          } else {
-            await Course.updateOne(
-              { courseCode: obj.courseCode },
-              {
-                courseName: obj.courseName,
-                batchFrom: obj.batchFrom,
-                batchTo: obj.batchTo,
-                classes: obj.classes,
-                totalMarks: obj.totalMarks,
-              }
-            );
-          }
+        console.log(obj);
+
+        const doesExist = await Course.findOne({
+          courseCode: obj.courseCode,
         });
-      }
+        if (!doesExist) {
+          const course = new Course(obj);
+          await course.save();
+        } else {
+          await Course.updateOne(
+            { courseCode: obj.courseCode },
+            {
+              courseName: obj.courseName,
+              batchFrom: obj.batchFrom,
+              batchTo: obj.batchTo,
+              classes: obj.classes,
+              attendanceTotalMarks: obj.attendanceTotalMarks,
+              ceTotalMarks: obj.ceTotalMarks,
+              caTotalMarks: obj.caTotalMarks,
+              vivaTotalMarks: obj.vivaTotalMarks,
+            }
+          );
+        }
+      });
       //   req.flash("success", "Your file is uploaded successfully and users are registered successfully");
       console.log(
         "Your file is uploaded successfully and users are registered successfully"
@@ -270,12 +281,10 @@ router.post("/experiment-upload", async (req, res, next) => {
 
             console.log(obj["courseCode"]);
 
-            const doesExist = await Experiment.findOne({
-              courseCode: `${obj["courseCode"]}`},{
-                courseName: obj.courseName,
-                experiments: obj.experiments,
-              });
-            console.log(doesExist);
+            const doesExist = await Experiment.find({
+              courseCode: `${obj["courseCode"]}`,
+            });
+            console.log("value of doesExist ", doesExist);
             if (!doesExist) {
               const experiment = new Experiment(obj);
               await experiment.save();
@@ -290,14 +299,12 @@ router.post("/experiment-upload", async (req, res, next) => {
               );
             }
           }
-          const docs = await Experiment.find({courseCode : obj.courseCode})
-          console.log(docs);
         });
       }
 
       //req.flash("success", "Your file is uploaded successfully and users are registered successfully");
       console.log(
-        "Your file is uploaded successfully and users are registered successfully"
+        "Your file is uploaded successfully and experiments are added"
       );
     } else {
       throw new Error("Only excel sheet(.xlsx) is allowed");

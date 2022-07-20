@@ -118,7 +118,8 @@ $(document).ready(function () {
         gearSpan.className="gearicon";
         let geara=document.createElement("a");
         geara.style="color:inherit;"
-        geara.href="/faculty/testcasesetup";
+        let course={"courseCode":this.textContent,"experimentNumber":numberSpan.textContent};
+        geara.href="/faculty/testcasesetup?courseCode="+this.textContent.split('-')[0]+"&experimentNumber="+numberSpan.textContent;
         let geari=document.createElement("i");
         geari.innerHTML ="&#xf013;";
         geari.style="font-size:24px";
