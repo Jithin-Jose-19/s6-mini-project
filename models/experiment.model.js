@@ -12,16 +12,17 @@ const ExperimentSchema = new mongoose.Schema({
     required : true,
   },
   experiments : [{
-    experimentNumber : String,
-    experimentName : String,
-    experimentQuestion : String,
-    testCase1 : String,
-    expectedOutput1 : String,
-    testCase2 : String,
-    expectedOutput2 : String,
-    testCase3 : String,
-    expectedOutput3 : String
-  }]
+    experimentNumber : {type: String,lowercase: true,required : true},
+    experimentName : {type: String,lowercase: true,required : true},
+    experimentQuestion : {type: String,lowercase: true,required : true},
+    testCase1 : {type: String,lowercase: true,default:"null",required : true},
+    expectedOutput1 : {type: String,lowercase: true,default:"null",required : true},
+    testCase2 : {type: String,lowercase: true,default:"null",required : true},
+    expectedOutput2 : {type: String,lowercase: true,default:"null",required : true},
+    testCase3 : {type: String,lowercase: true,default:"null",required : true},
+    expectedOutput3 : {type: String,lowercase: true,default:"null",required : true},
+    _id : false
+  }],
 });
 
 const Experiment = mongoose.model('experiment', ExperimentSchema);
