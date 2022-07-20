@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylefacultyhome.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=IBM+Plex+Serif:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main-section">
+      <h1>MITS Lab Output Verification System</h1>
+    </div>
+    <div class="expdiv">
+        <% if (typeof expStuds[0] !== 'undefined') { %>
+        <ul class="explist" id="experiment-list">
+        
+           <label style="padding: 50px;" id="course-label">
+          <span class="course-name-span" id="coursenamespan"><%= expStuds[0].batchFrom +"-"+(parseInt(expStuds[0].batchFrom)+4)+" > "+expStuds[0].className+" > "+expStuds[0].courseCode%></span>
+          <span class="course-gear-icon"
+            ><a href="" style="color: inherit"
+              ><i style="font-size: 24px" class="fa">&#xf013;</i></a
+            ></span> 
+            </label> 
+            
+        
+        
+         <% expStuds.forEach(expStud => { %>
+            <li>
+                <span class="name"><%= expStud.email %></span>
+             
+              </li>
+            <% }) %> 
+       
+      </ul>
+      <% }  else { %>
+        <h1>No submissions!</h1>
+        <% } %> 
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/facultyhome.js"></script>
+  </body>
+</html>

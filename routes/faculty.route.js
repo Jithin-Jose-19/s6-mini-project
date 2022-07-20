@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Course = require("../models/course.model");
 const Experiment = require("../models/experiment.model");
+const UploadedCodeModel = require("../models/UploadedCode.model");
 
 router.get("/home", async (req, res, next) => {
   try {
@@ -109,4 +110,31 @@ router.post("/getExperiments", async (req, res, next) => {
     next(error);
   }
 });
+
+router.get("/submitted-students", async (req, res, next) => {
+  console.log("Batch : "+req.query.batchFrom);
+  console.log("Class : "+req.query.class);
+  console.log("Course Code : "+req.query.courseCode.split('-')[0]);
+  console.log("Exp Num : "+req.query.expNum);
+
+  try{
+    const docs = await UploadedCodeModel.find({
+      courseCode: req.query.courseCode.split('-')[0],
+      experimentNumber:req.query.expNum,
+      className:req.query.class,
+      batchFrom:req.query.batchFrom,
+    });
+
+    docs.forEach((doc)=>{
+      console.log(doc);
+    });
+    res.render("submittedStudentsPage",{expStuds:docs});
+  }catch(error){
+console.log(error);
+res.render("submittedStudentsPage");
+  }
+  
+  
+});
+
 module.exports = router;

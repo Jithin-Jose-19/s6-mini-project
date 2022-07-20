@@ -113,6 +113,15 @@
     transition: .5s;
   }
 
+  
+  .explist label .course-name-span{
+    float: left;
+    color: #ff3772;
+  }
+  .explist label .course-gear-icon{
+    float: right;
+    color: #fff;
+  }
  
   
   .explist li span:nth-child(1){

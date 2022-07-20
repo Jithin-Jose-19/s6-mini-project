@@ -1,60 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylefacultyhome.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=IBM+Plex+Serif:wght@500&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=IBM+Plex+Serif:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="main-section">
-        <h1>MITS Lab Output Verification System</h1>
-        <div class="container">
-      
-          <div class="custom-select-wrapper">
-            <div class="input-wrapper">
-              <input type="text" placeholder="Select Batch" class="custom-select" readonly="readonly">
-              <i class="fa fa-angle-down" aria-hidden="true"></i>
-              <ul>
-                <% batches.forEach(batchFrom => { %>
-                  <li><span class="batchspan"><%= batchFrom + " - " + parseInt(parseInt(batchFrom)+4) %> </span></li>
-                <% }) %> 
-              </ul>
-      
-            </div>
-      
+      <h1>MITS Lab Output Verification System</h1>
+      <div class="container">
+        <div class="custom-select-wrapper">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              placeholder="Select Batch"
+              class="custom-select"
+              readonly="readonly"
+            />
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+            <ul>
+              <% batches.forEach(batchFrom => { %>
+              <li>
+                <span class="batchspan"
+                  ><%= batchFrom + " - " + parseInt(parseInt(batchFrom)+4) %>
+                </span>
+              </li>
+              <% }) %>
+            </ul>
           </div>
-          <div class="custom-select-wrapper">
-            <div class="input-wrapper">
-              <input type="text" placeholder="Select Class" class="custom-select" readonly="readonly">
-              <i class="fa fa-angle-down" aria-hidden="true"></i>
-              <ul id="classlist">
-              
-              </ul>
-            </div>
-      
+        </div>
+        <div class="custom-select-wrapper">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              placeholder="Select Class"
+              class="custom-select"
+              readonly="readonly"
+            />
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+            <ul id="classlist"></ul>
           </div>
-      
-          <div class="custom-select-wrapper">
-            <div class="input-wrapper">
-              <input type="text" placeholder="Select Course" class="custom-select" readonly="readonly">
-              <i class="fa fa-angle-down" aria-hidden="true"></i>
-              <ul id="courselist"> 
-              </ul>
-            </div>
+        </div>
+
+        <div class="custom-select-wrapper">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              placeholder="Select Course"
+              class="custom-select"
+              readonly="readonly"
+            />
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+            <ul id="courselist"></ul>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="expdiv">
-        <ul class="explist" id="experiment-list">
-          <li>Please select a course.</li>
-          <!--
+    <div class="expdiv">
+      <ul class="explist" id="experiment-list">
+        <label style="padding: 50px;" id="course-label">
+          <span class="course-name-span" id="coursenamespan"></span>
+          <span class="course-gear-icon"
+            ><a href="" style="color: inherit"
+              ><i style="font-size: 24px" class="fa">&#xf013;</i></a
+            ></span
+          > 
+        </label>
+        
+        <li class="exp-list-item">Please select a course.</li>
+        <!--
           <li>
             <span class="number">1</span>
             <span class="name">Insertion Sort</span>
@@ -82,11 +109,9 @@
           </li>
 
            -->
-        </ul>
-      </div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
-      <script src="/js/facultyhome.js"></script>   
-</body>
+      </ul>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/facultyhome.js"></script>
+  </body>
 </html>
-
-

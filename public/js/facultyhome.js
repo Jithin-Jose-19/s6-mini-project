@@ -1,5 +1,5 @@
-var batchSelected = "";
-
+let batchSelected = "";
+let classSelected="";
 $(document).ready(function () {
   //Open Drop Down
   $(".custom-select").click(function (e) {
@@ -59,6 +59,7 @@ $(document).ready(function () {
   function classSelected() {
     console.log("batch:" + batchSelected);
     $(".open-dropdown .custom-select").val(this.textContent);
+    classSelected=this.textContent;
     (async () => {
       const response = await fetch("http://localhost:3000/faculty/getCourses", {
         method: "POST",
@@ -69,13 +70,13 @@ $(document).ready(function () {
         body: JSON.stringify({ batch: batchSelected, class: this.textContent }),
       });
       const body = await response.json();
+      var ul = document.getElementById("courselist");
+      while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+      }
       body.forEach((element) => {
-        var ul = document.getElementById("courselist");
-        while (ul.firstChild) {
-          ul.removeChild(ul.firstChild);
-        }
         var span = document.createElement("span");
-        span.textContent = element['courseCode']+"-"+element['courseName'];
+        span.textContent = element["courseCode"] + "-" + element["courseName"];
         span.onclick = courseSelected;
         var li = document.createElement("li");
         li.appendChild(span);
@@ -84,59 +85,84 @@ $(document).ready(function () {
     })();
   }
 
-  function courseSelected(){
-    console.log("Selected Course  : "+this.textContent);
+  function courseSelected() {
+    console.log("Selected Course  : " + this.textContent);
     $(".open-dropdown .custom-select").val(this.textContent);
     (async () => {
-      const response = await fetch("http://localhost:3000/faculty/getExperiments", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({courseCode:this.textContent}),
-      });
+      const response = await fetch(
+        "http://localhost:3000/faculty/getExperiments",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ courseCode: this.textContent }),
+        }
+      );
       const body = await response.json();
-      console.log("Experiments : "+body);
+
+      
+      let courseLabel = document.getElementById("course-label");
+      let courseNameSpan = document.getElementById("coursenamespan");
+      courseNameSpan.textContent = this.textContent;
+
       var ul = document.getElementById("experiment-list");
       while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
       }
+      courseLabel.appendChild(courseNameSpan);
+ 
+      ul.appendChild(courseLabel);
       body.forEach((element) => {
-        element['experiments'].forEach((exp)=>{
-          console.log(exp['experimentName']);
-        
-        let numberSpan = document.createElement("span");
-        numberSpan.className="number";
-        numberSpan.textContent = exp['experimentNumber'];
+        element["experiments"].forEach((exp) => {
+          console.log(exp["experimentName"]);
 
-        let nameSpan = document.createElement("span");
-        nameSpan.className="name";
-        nameSpan.textContent = exp['experimentName'];
+          let numberSpan = document.createElement("span");
+          numberSpan.className = "number";
+          numberSpan.textContent = exp["experimentNumber"];
 
-        let gearSpan = document.createElement("span");
-        gearSpan.className="gearicon";
-        let geara=document.createElement("a");
-        geara.style="color:inherit;"
-        let course={"courseCode":this.textContent,"experimentNumber":numberSpan.textContent};
-        geara.href="/faculty/testcasesetup?courseCode="+this.textContent.split('-')[0]+"&experimentNumber="+numberSpan.textContent;
-        let geari=document.createElement("i");
-        geari.innerHTML ="&#xf013;";
-        geari.style="font-size:24px";
-        geari.className="fa";
-       
-        //span.onclick = courseSelected;
-        var li = document.createElement("li");
-       li.appendChild(numberSpan);
-        li.appendChild(nameSpan);
-        geara.appendChild(geari)
-        gearSpan.appendChild(geara);
-        li.appendChild(gearSpan);
-        ul.appendChild(li);
-        })
-        
+          let nameSpan = document.createElement("span");
+          nameSpan.className = "name";
+          nameSpan.textContent = exp["experimentName"];
+          let gearSpan = document.createElement("span");
+          gearSpan.className = "gearicon";
+          let geara = document.createElement("a");
+          geara.style = "color:inherit;";
+          let courseDetails = {
+            courseCode: this.textContent,
+            experimentNumber: numberSpan.textContent,
+          };
+          geara.href =
+            "/faculty/testcasesetup?courseCode=" +
+            this.textContent.split("-")[0] +
+            "&experimentNumber=" +
+            numberSpan.textContent;
+          let geari = document.createElement("i");
+          geari.innerHTML = "&#xf013;";
+          geari.style = "font-size:24px";
+          geari.className = "fa";
+          var li = document.createElement("li");
+          li.className="exp-list-item";
+          li.addEventListener("click",function(){
+            expClickHandler(courseDetails);
+          });
+          li.appendChild(numberSpan);
+          li.appendChild(nameSpan);
+          geara.appendChild(geari);
+          gearSpan.appendChild(geara);
+          li.appendChild(gearSpan);
+          ul.appendChild(li);
+        });
       });
     })();
+  }
+ 
+  function expClickHandler(courseDetails){
+
+  window.location="/faculty/submitted-students?batchFrom="+batchSelected.split('-')[0].trim()+"&class="+classSelected+"&courseCode="+courseDetails['courseCode']+"&expNum="+courseDetails['experimentNumber'];
+    console.log("exp clicked");
+    
   }
   // close when click on Body
   $("html").click(function (event) {
@@ -145,4 +171,3 @@ $(document).ready(function () {
     }
   });
 });
-
