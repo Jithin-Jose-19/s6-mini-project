@@ -53,11 +53,12 @@
     }
   </style>
   <body>
+    
     <div id="test1div">
       <h3>Test Case 1</h3>
-      <form action="/action_page.php">
+      
         <label for="test2input">Input</label>
-
+        <input type="hidden" name="selectedCourse" value=" CST KAi ">
         <textarea
           id="test1input"
           name="test1input"
@@ -82,7 +83,7 @@
 
     <div id="test2div">
       <h3>Test Case 2</h3>
-      <form action="/action_page.php">
+     
         <label for="test2input">Input</label>
         <textarea
           id="test2input"
@@ -104,12 +105,12 @@
           placeholder="Type output here.."
         ><%= test2Output %> 
         </textarea>
-      </form>
+      
     </div>
 
     <div id="test3div">
       <h3>Test Case 3</h3>
-      <form action="/action_page.php">
+      
         <label for="test1input">Input</label>
         <textarea
           id="test3input"
@@ -131,9 +132,14 @@
           placeholder="Type output here.."
         ><%= test3Output %> 
         </textarea>
-      </form>
+    
     </div>
 
-    <input type="submit" value="Submit" id="testSubmitBtn" />
+    <input type="submit" value="Submit" id="testSubmitBtn" onclick="updateTestCases()"/>
+<script>
+  function updateTestCases(){
+    console.log("function for updating test cases called!");
+  }
+</script>
   </body>
 </html>

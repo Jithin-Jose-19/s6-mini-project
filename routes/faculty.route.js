@@ -55,6 +55,9 @@ router.get("/testcasesetup", async (req, res, next) => {
   res.render("facultyTestCaseInput", { test1input:testCase1 ,test2input:testCase2,test3input:testCase3,test1Output:output1,test2Output:output2,test3Output:output3 });
 });
 
+router.post("/testcasesetup/updatetestcases",async(req,res,next)=>{
+  console.log("Test cases updated successfully!");
+});
 router.post("/getClass", async (req, res, next) => {
   try {
     var selectedBatchFrom = req.body["batch"].slice(0, 4);
