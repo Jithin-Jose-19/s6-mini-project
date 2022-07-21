@@ -9,8 +9,8 @@ router.get("", (req, res, next) => {
   res.render("studentHome");
 });
 router.get("/upload-code", (req, res, next) => {
-  console.log(req.query)
-  res.render("uploadCode",{obj : req.query});
+  console.log(req.query);
+  res.render("uploadCode", { obj: req.query });
 });
 
 router.get("/course-select", async (req, res, next) => {
@@ -42,13 +42,17 @@ router.post("/course-select", async (req, res, next) => {
     doc.experiments.forEach((experiment) => {
       console.log(experiment.experimentName);
     });
-    res.render("student-experiment-select", { experiments: doc.experiments , selectedCourseCode : doc2.courseCode , selectedCourseName : doc2.courseName});
+    res.render("student-experiment-select", {
+      experiments: doc.experiments,
+      selectedCourseCode: doc2.courseCode,
+      selectedCourseName: doc2.courseName,
+    });
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/uploadCodeFile", (req, res, next) => {
+router.post("/uploadCodeFile", async(req, res, next) => {
   console.log(req.body);
   let obj = {};
   obj["experimentNumber"] = req.body.experimentNumber.trim();
@@ -58,66 +62,85 @@ router.post("/uploadCodeFile", (req, res, next) => {
   obj["email"] = req.user.email;
   obj["batchFrom"] = req.user.batchFrom;
   obj["batchTo"] = req.user.batchTo;
-  obj["className"] = req.user.className
-  console.log(obj)
+  obj["className"] = req.user.className;
+  console.log(obj);
 
-  
-  
-  var code = req.body.code;
-  const ioMap = new Map([
-    ["2 8 3 9 1", "1 2 3 8 9 "],
-    ["5 8 4 0 1", "0 1 4 5 8 "],
-    ["3 6 5 2 4", "2 3 4 5 6 "],
-  ]);
-  var testCasePassed = [0, 0, 0];
-  var i = 0;
-  ioMap.forEach(function (value, key) {
-    var program = {
-      script: code,
-      language: "c",
-      stdin: key,
-      versionIndex: "0",
-      clientId: "10b08afe3f797dcd5f7df7af153f8b01",
-      clientSecret:
-        "383e2dfeefc95027783c6ec540d551b031d685d7f574132c110025efec5a407b",
-    };
+  try {
+   await Experiment.findOne(
+      { courseCode: obj['courseCode']},
+      function (err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+         
+          const ioMap = new Map([
+            [ doc["experiments"][parseInt(obj['experimentNumber'])-1]['testCase1'],  doc["experiments"][parseInt(obj['experimentNumber'])-1]['expectedOutput1']],
+            [ doc["experiments"][parseInt(obj['experimentNumber'])-1]['testCase2'],  doc["experiments"][parseInt(obj['experimentNumber'])-1]['expectedOutput2']],
+            [ doc["experiments"][parseInt(obj['experimentNumber'])-1]['testCase3'],  doc["experiments"][parseInt(obj['experimentNumber'])-1]['expectedOutput3']],
+          ]);
 
-    axios
-      .post("https://api.jdoodle.com/v1/execute", program)
-      .then(function (response) {
-        console.log(response.data["output"]);
-        
-        if (response.data["output"] == value) {
-          console.log("output : ", response.data["output"]);
-          console.log("Value : ", value);
-          testCasePassed[i] = 1;
-        } else testCasePassed[i] = 0;
-        i++;
-        const tMark = new Map([
-          [0, "\u274c"],
-          [1, "\u2705"],
-        ]);
-        if (i == 3) {
-          var testCaseResult = {
-            t1: tMark.get(testCasePassed[0]),
-            t2: tMark.get(testCasePassed[1]),
-            t3: tMark.get(testCasePassed[2]),
-          };
-          if(testCasePassed[0]==1 && testCasePassed[1]==1&&testCasePassed[3]==1){
-            const codeObj = new uploadedCodeModel(obj);
-            codeObj.save();  
-          }
-          console.log(testCaseResult);
-          let obj1 = {}
-          obj1["selectedCourse"] = req.body.selectedCourse.trim();
-          obj1["experimentNumber"] = req.body.experimentNumber.trim();
-          res.render("uploadCode", { testCaseResult: testCaseResult , obj : obj1 });
+          var code = req.body.code;
+          
+          var testCasePassed = [0, 0, 0];
+          var i = 0;
+          ioMap.forEach(function (value, key) {
+            var program = {
+              script: code,
+              language: "c",
+              stdin: key,
+              versionIndex: "0",
+              clientId: "10b08afe3f797dcd5f7df7af153f8b01",
+              clientSecret:
+                "383e2dfeefc95027783c6ec540d551b031d685d7f574132c110025efec5a407b",
+            };
+
+            axios
+              .post("https://api.jdoodle.com/v1/execute", program)
+              .then(function (response) {
+                console.log(response.data["output"]);
+
+                if (response.data["output"] == value) {
+                  console.log("output : ", response.data["output"]);
+                  console.log("Value : ", value);
+                  testCasePassed[i] = 1;
+                } else testCasePassed[i] = 0;
+                i++;
+                const tMark = new Map([
+                  [0, "\u274c"],
+                  [1, "\u2705"],
+                ]);
+                if (i == 3) {
+                  var testCaseResult = {
+                    t1: tMark.get(testCasePassed[0]),
+                    t2: tMark.get(testCasePassed[1]),
+                    t3: tMark.get(testCasePassed[2]),
+                  };
+                  if (
+                    testCasePassed[0] == 1 &&
+                    testCasePassed[1] == 1 &&
+                    testCasePassed[2] == 1
+                  ) {
+                    const codeObj = new uploadedCodeModel(obj);
+                    codeObj.save();
+                  }
+                  console.log(testCaseResult);
+                  let obj1 = {};
+                  obj1["selectedCourse"] = req.body.selectedCourse.trim();
+                  obj1["experimentNumber"] = req.body.experimentNumber.trim();
+                  res.render("uploadCode", {
+                    testCaseResult: testCaseResult,
+                    obj: obj1,
+                  });
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          });
         }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  });
+      }
+    );
+  } catch (error) {}
 });
 
 //uploading code to database
@@ -193,7 +216,7 @@ int main() {
 //   int n=5, arr[10];
 //   for(int i=0;i<n;i++){
 //       scanf("%d",&arr[i]);
-//   }    
+//   }
 //   insertionSort(arr, n);
 //   printArray(arr, n);
 //   return 0;
