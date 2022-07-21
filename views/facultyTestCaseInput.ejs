@@ -57,7 +57,7 @@
     <div id="test1div">
       <h3>Test Case 1</h3>
       
-        <label for="test2input">Input</label>
+        <label for="test1input">Input</label>
         <input type="hidden" name="selectedCourse" value=" CST KAi ">
         <textarea
           id="test1input"
@@ -111,7 +111,7 @@
     <div id="test3div">
       <h3>Test Case 3</h3>
       
-        <label for="test1input">Input</label>
+        <label for="test3input">Input</label>
         <textarea
           id="test3input"
           name="test3input"
@@ -138,7 +138,9 @@
     <input type="submit" value="Submit" id="testSubmitBtn" onclick="updateTestCases()"/>
 <script>
   function updateTestCases(){
-    console.log("function for updating test cases called!");
+    let t1in=document.getElementById("test1input").value;
+    
+    console.log(t1in);
   }
 </script>
   </body>
