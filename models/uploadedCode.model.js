@@ -42,6 +42,26 @@ const UploadedCodeSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
   },
+  attendanceMarks : {
+    type: String,
+    lowercase: true,
+    default : "0"
+  },
+  caMarks : {
+    type: String,
+    lowercase: true,
+    default : "0"
+  },
+  ceMarks : {
+    type: String,
+    lowercase: true,
+    default : "0"
+  },
+  vivaMarks : {
+    type: String,
+    lowercase: true,
+    default : "0"
+  }
 });
 
 const uploadedCodeModel = mongoose.model('uploadedCode',UploadedCodeSchema);
