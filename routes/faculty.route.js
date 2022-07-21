@@ -15,15 +15,17 @@ router.get("/home", async (req, res, next) => {
     next(error);
   }
 });
+
+
 router.get("/testcasesetup", async (req, res, next) => {
   console.log("Course Code :" + req.query.courseCode);
   console.log("Experiment Number : " + req.query.experimentNumber);
-  let testCase1="";
-  let testCase2="";
-  let testCase3="";
-  let output1="";
-  let output2="";
-  let output3="";
+  let testCase1 = "";
+  let testCase2 = "";
+  let testCase3 = "";
+  let output1 = "";
+  let output2 = "";
+  let output3 = "";
   try {
     const docs = await Experiment.find({
       courseCode: req.query.courseCode,
@@ -31,33 +33,56 @@ router.get("/testcasesetup", async (req, res, next) => {
     docs.forEach((doc) => {
       doc["experiments"].forEach((exp) => {
         if (exp["experimentNumber"] == req.query.experimentNumber) {
-          testCase1=exp['testCase1'];
-          testCase2=exp['testCase2'];
-          testCase3=exp['testCase3'];
+          testCase1 = exp["testCase1"];
+          testCase2 = exp["testCase2"];
+          testCase3 = exp["testCase3"];
 
-          output1=exp['expectedOutput1'];
-          output2=exp['expectedOutput2'];
-          output3=exp['expectedOutput3'];
-
+          output1 = exp["expectedOutput1"];
+          output2 = exp["expectedOutput2"];
+          output3 = exp["expectedOutput3"];
         }
       });
     });
   } catch (error) {}
-  console.log("testCase1 : "+testCase1);
-  console.log("testCase2 : "+testCase2);
-  console.log("testCase3 : "+testCase3);
+  console.log("testCase1 : " + testCase1);
+  console.log("testCase2 : " + testCase2);
+  console.log("testCase3 : " + testCase3);
 
-  console.log("Output1 : "+output1);
-  console.log("Output2 : "+output2);
-  console.log("Output3 : "+output3);
+  console.log("Output1 : " + output1);
+  console.log("Output2 : " + output2);
+  console.log("Output3 : " + output3);
 
-
-  res.render("facultyTestCaseInput", { test1input:testCase1 ,test2input:testCase2,test3input:testCase3,test1Output:output1,test2Output:output2,test3Output:output3 });
+  res.render("facultyTestCaseInput", {
+    courseCode: req.query.courseCode,
+    expNum: req.query.experimentNumber,
+    test1input: testCase1,
+    test2input: testCase2,
+    test3input: testCase3,
+    test1Output: output1,
+    test2Output: output2,
+    test3Output: output3,
+  });
 });
 
-router.post("/testcasesetup/updatetestcases",async(req,res,next)=>{
-  console.log("Test cases updated successfully!");
+router.post("/testcasesetup/updatetestcases", async (req, res, next) => {
+  console.log(req.body);
+
+  const response=await Experiment.updateOne({ courseCode: req.body['courseCode'] ,"experiments.experimentNumber":req.body['expNum']}, {
+    "experiments.$.testCase1": req.body['tin1'],
+    "experiments.$.expectedOutput1": req.body['tout1'],
+    "experiments.$.testCase2": req.body['tin2'],
+    "experiments.$.expectedOutput2": req.body['tout2'],
+    "experiments.$.testCase3": req.body['tin3'],
+    "experiments.$.expectedOutput3": req.body['tout3'],
+  }, function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log("Successfully updated.");
+    }
+  });
 });
+
 router.post("/getClass", async (req, res, next) => {
   try {
     var selectedBatchFrom = req.body["batch"].slice(0, 4);
@@ -115,41 +140,40 @@ router.post("/getExperiments", async (req, res, next) => {
 });
 
 router.get("/submitted-students", async (req, res, next) => {
-  console.log("Batch : "+req.query.batchFrom);
-  console.log("Class : "+req.query.class);
-  console.log("Course Code : "+req.query.courseCode.split('-')[0]);
-  console.log("Exp Num : "+req.query.expNum);
+  console.log("Batch : " + req.query.batchFrom);
+  console.log("Class : " + req.query.class);
+  console.log("Course Code : " + req.query.courseCode.split("-")[0]);
+  console.log("Exp Num : " + req.query.expNum);
 
-  try{
+  try {
     const docs = await UploadedCodeModel.find({
-      courseCode: req.query.courseCode.split('-')[0],
-      experimentNumber:req.query.expNum,
-      className:req.query.class,
-      batchFrom:req.query.batchFrom,
+      courseCode: req.query.courseCode.split("-")[0],
+      experimentNumber: req.query.expNum,
+      className: req.query.class,
+      batchFrom: req.query.batchFrom,
     });
 
-    docs.forEach((doc)=>{
+    docs.forEach((doc) => {
       console.log(doc);
     });
-    res.render("submittedStudentsPage",{expStuds:docs});
-  }catch(error){
-console.log(error);
-res.render("submittedStudentsPage");
+    res.render("submittedStudentsPage", { expStuds: docs });
+  } catch (error) {
+    console.log(error);
+    res.render("submittedStudentsPage");
   }
 });
 
 router.get("/submitted-students/view-code", async (req, res, next) => {
- 
-  try{
+  try {
     const doc = await UploadedCodeModel.findById(req.query.id);
 
-      console.log(doc);
-    
-    res.render("viewCodePage",{codeDet:doc});
-  }catch(error){
-console.log(error);
-res.render("viewCodePage");
-}
-  });
+    console.log(doc);
+
+    res.render("viewCodePage", { codeDet: doc });
+  } catch (error) {
+    console.log(error);
+    res.render("viewCodePage");
+  }
+});
 
 module.exports = router;

@@ -53,10 +53,12 @@
     }
   </style>
   <body>
-    
+
+    <h2 id="coursecode"><%= "Course Code : "+courseCode%> </h2>
+    <h2 id="expnum"><%= "Experiment : "+expNum%> </h2>
+
     <div id="test1div">
       <h3>Test Case 1</h3>
-      
         <label for="test1input">Input</label>
         <input type="hidden" name="selectedCourse" value=" CST KAi ">
         <textarea
@@ -66,8 +68,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type input here.."
-        ><%= test1input %> 
-        </textarea>
+        ><%=test1input%></textarea>
         <label for="test1output">Output</label>
         <textarea
           id="test1output"
@@ -76,14 +77,12 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type output here.."
-        ><%= test1Output %> 
-        </textarea>
+        ><%=test1Output%></textarea>
       </form>
     </div>
 
     <div id="test2div">
       <h3>Test Case 2</h3>
-     
         <label for="test2input">Input</label>
         <textarea
           id="test2input"
@@ -92,8 +91,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type input here.."
-        ><%= test2input %> 
-        </textarea>
+        ><%=test2input%></textarea>
 
         <label for="test2output">Output</label>
         <textarea
@@ -103,14 +101,12 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type output here.."
-        ><%= test2Output %> 
-        </textarea>
+        ><%=test2Output%></textarea>
       
     </div>
 
     <div id="test3div">
       <h3>Test Case 3</h3>
-      
         <label for="test3input">Input</label>
         <textarea
           id="test3input"
@@ -119,8 +115,7 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type input here.."
-        ><%= test3input %> 
-        </textarea>
+        ><%=test3input%></textarea>
 
         <label for="test3output">Output</label>
         <textarea
@@ -130,17 +125,34 @@
           rows="3"
           style="overflow: auto"
           placeholder="Type output here.."
-        ><%= test3Output %> 
-        </textarea>
-    
+        ><%=test3Output%></textarea>
     </div>
 
-    <input type="submit" value="Submit" id="testSubmitBtn" onclick="updateTestCases()"/>
+    <input type="submit" value="Submit" id="testSubmitBtn" onclick="updateTestCases('<%=courseCode%>','<%=expNum%>')"%>/>
 <script>
-  function updateTestCases(){
+  function updateTestCases(courseCode,expNum){
+
     let t1in=document.getElementById("test1input").value;
+    let t1out=document.getElementById("test1output").value;
+    let t2in=document.getElementById("test2input").value;
+    let t2out=document.getElementById("test2output").value;
+    let t3in=document.getElementById("test3input").value;
+    let t3out=document.getElementById("test3output").value;
+    console.log("TEST CASE 1:\n"+t1in+"\n"+t1out);
+    console.log("TEST CASE 2:\n"+t2in+"\n"+t2out);
+    console.log("TEST CASE 3:\n"+t3in+"\n"+t3out);
+
     
-    console.log(t1in);
+    fetch("http://localhost:3000/faculty/testcasesetup/updatetestcases", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ courseCode:courseCode,expNum:expNum,tin1:t1in,tout1:t1out,tin2:t2in,tout2:t2out,tin3:t3in,tout3:t3out}),
+      }).then((res)=>{
+        
+      });
   }
 </script>
   </body>
