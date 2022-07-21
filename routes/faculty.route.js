@@ -81,6 +81,7 @@ router.post("/testcasesetup/updatetestcases", async (req, res, next) => {
       console.log("Successfully updated.");
     }
   });
+  res.render('/faculty/home');
 });
 
 router.post("/getClass", async (req, res, next) => {
