@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const createHttpError = require('http-errors');
 
 const UploadedCodeSchema = new mongoose.Schema({
   email: {
@@ -42,22 +40,17 @@ const UploadedCodeSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
   },
-  attendanceMarks : {
+  vivaMark : {
     type: String,
     lowercase: true,
     default : "0"
   },
-  caMarks : {
+  outputMark : {
     type: String,
     lowercase: true,
     default : "0"
   },
-  ceMarks : {
-    type: String,
-    lowercase: true,
-    default : "0"
-  },
-  vivaMarks : {
+  recordSubmissionMark : {
     type: String,
     lowercase: true,
     default : "0"

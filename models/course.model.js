@@ -25,25 +25,20 @@ const CourseSchema = new mongoose.Schema({
     lowercase: true,
     required : true,
   },
-  attendanceTotalMarks : {
+  avgVivaMark : {
     type: String,
     lowercase: true,
-    required : true,
+    default : "0"
   },
-  ceTotalMarks : {
+  avgOutputMark : {
     type: String,
     lowercase: true,
-    required : true,
+    default : "0"
   },
-  caTotalMarks : {
+  avgRecordSubmissionMark : {
     type: String,
     lowercase: true,
-    required : true,
-  },
-  vivaTotalMarks : {
-    type: String,
-    lowercase: true,
-    required : true,
+    default : "0"
   }
 });
 

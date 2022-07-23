@@ -156,23 +156,20 @@ router.post("/course-upload", async (req, res, next) => {
         delete obj[`${columnsArray[3]}`];
         obj["courseName"] = obj[`${columnsArray[4]}`];
         delete obj[`${columnsArray[4]}`];
-        obj["attendanceTotalMarks"] = obj[`${columnsArray[5]}`];
+        obj["avgVivaMark"] = obj[`${columnsArray[5]}`];
         delete obj[`${columnsArray[5]}`];
-        obj["ceTotalMarks"] = obj[`${columnsArray[6]}`];
+        obj["avgOutputMark"] = obj[`${columnsArray[6]}`];
         delete obj[`${columnsArray[6]}`];
-        obj["caTotalMarks"] = obj[`${columnsArray[7]}`];
+        obj["avgRecordSubmissionMark"] = obj[`${columnsArray[7]}`];
         delete obj[`${columnsArray[7]}`];
-        obj["vivaTotalMarks"] = obj[`${columnsArray[8]}`];
-        delete obj[`${columnsArray[8]}`];
 
         obj.courseName = ("" + obj.courseName + "").trim();
         obj.batchFrom = ("" + obj.batchFrom + "").trim();
         obj.batchTo = ("" + obj.batchTo + "").trim();
         obj.courseCode = ("" + obj.courseCode + "").trim();
-        obj.attendanceTotalMarks = ("" + obj.attendanceTotalMarks + "").trim();
-        obj.ceTotalMarks = ("" + obj.ceTotalMarks + "").trim();
-        obj.caTotalMarks = ("" + obj.caTotalMarks + "").trim();
-        obj.vivaTotalMarks = ("" + obj.vivaTotalMarks + "").trim();
+        obj.avgVivaMark = ("" + obj.avgVivaMark + "").trim();
+        obj.avgOutputMark = ("" + obj.avgOutputMark + "").trim();
+        obj.avgRecordSubmissionMark = ("" + obj.avgRecordSubmissionMark + "").trim();
 
         console.log(obj);
 
@@ -190,10 +187,9 @@ router.post("/course-upload", async (req, res, next) => {
               batchFrom: obj.batchFrom,
               batchTo: obj.batchTo,
               classes: obj.classes,
-              attendanceTotalMarks: obj.attendanceTotalMarks,
-              ceTotalMarks: obj.ceTotalMarks,
-              caTotalMarks: obj.caTotalMarks,
-              vivaTotalMarks: obj.vivaTotalMarks,
+              avgVivaMark : obj.avgVivaMark,
+              avgOutputMark : obj.avgOutputMark,
+              avgRecordSubmissionMark : obj.avgRecordSubmissionMark
             }
           );
         }
