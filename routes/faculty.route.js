@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Course = require("../models/course.model");
 const Experiment = require("../models/experiment.model");
 const UploadedCodeModel = require("../models/UploadedCode.model");
+const User = require("../models/user.model");
 
 router.get("/home", async (req, res, next) => {
   try {
@@ -15,7 +16,6 @@ router.get("/home", async (req, res, next) => {
     next(error);
   }
 });
-
 
 router.get("/testcasesetup", async (req, res, next) => {
   console.log("Course Code :" + req.query.courseCode);
@@ -67,21 +67,28 @@ router.get("/testcasesetup", async (req, res, next) => {
 router.post("/testcasesetup/updatetestcases", async (req, res, next) => {
   console.log(req.body);
 
-  const response=await Experiment.updateOne({ courseCode: req.body['courseCode'] ,"experiments.experimentNumber":req.body['expNum']}, {
-    "experiments.$.testCase1": req.body['tin1'],
-    "experiments.$.expectedOutput1": req.body['tout1'],
-    "experiments.$.testCase2": req.body['tin2'],
-    "experiments.$.expectedOutput2": req.body['tout2'],
-    "experiments.$.testCase3": req.body['tin3'],
-    "experiments.$.expectedOutput3": req.body['tout3'],
-  }, function(err) {
-    if(err) {
-      console.log(err);
-    } else {
-      console.log("Successfully updated.");
+  const response = await Experiment.updateOne(
+    {
+      courseCode: req.body["courseCode"],
+      "experiments.experimentNumber": req.body["expNum"],
+    },
+    {
+      "experiments.$.testCase1": req.body["tin1"],
+      "experiments.$.expectedOutput1": req.body["tout1"],
+      "experiments.$.testCase2": req.body["tin2"],
+      "experiments.$.expectedOutput2": req.body["tout2"],
+      "experiments.$.testCase3": req.body["tin3"],
+      "experiments.$.expectedOutput3": req.body["tout3"],
+    },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Successfully updated.");
+      }
     }
-  });
-  res.render('/faculty/home');
+  );
+  res.render("/faculty/home");
 });
 
 router.post("/getClass", async (req, res, next) => {
@@ -177,4 +184,69 @@ router.get("/submitted-students/view-code", async (req, res, next) => {
   }
 });
 
+router.post(
+  "/submitted-students/view-code/update-marks",
+  async (req, res, next) => {
+    console.log(req.body);
+
+    await UploadedCodeModel.updateOne(
+      { _id: req.body["programId"] },
+      {
+        vivaMark: req.body["vivaMark"],
+        outputMark: req.body["outputMark"],
+        recordSubmissionMark: req.body["recordSubmissionMark"],
+      },
+      function (err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Marks updated succesfully!");
+          //TODO - Instead of redirecting render the same page with an alert("Mark updated successfully!")
+          res.redirect("/faculty/home");
+        }
+      }
+    );
+  }
+);
+
+router.get("/home/report-download", async (req, res, next) => {
+  console.log(req.query);
+  try {
+    let avgVivaMarks=0.0;
+    let avgOutputMarks=0.0;
+    let avgRecordSubmissionMarks=0.0;
+    const course=await Experiment.find({courseCode:req.query.courseCode});
+    const numOfExperiments=course[0]['experiments'].length;
+    const students=await User.find({batchFrom:req.query.batchFrom,className:req.query.className});
+    let report=[];
+    students.forEach((student)=>{
+      let studentDetails={};
+      studentDetails.name=student.username;
+      studentDetails.email=student.email;
+      studentDetails.avgVivaMarks=0.0;
+      studentDetails.avgOutputMarks=0.0;
+      studentDetails.avgRecordSubmissionMarks=0.0;
+      report.push(studentDetails);
+    })
+    const codes = await UploadedCodeModel.find({
+      courseCode: req.query.courseCode,
+      batchFrom: req.query.batchFrom,
+      className: req.query.className,
+    });
+
+    
+    report.forEach((student) => {
+      codes.forEach((code) => {
+        if(code['email']==student.email){
+          let index=report.findIndex((stu=>stu.email==student.email))
+          report[index].avgVivaMarks+=parseFloat(code['vivaMark']);
+          report[index].avgOutputMarks+=parseFloat(code['outputMark']);
+          report[index].avgRecordSubmissionMarks+=parseFloat(code['recordSubmissionMark']);
+        }
+      });
+    });
+    console.log(report);
+   
+  } catch (error) {}
+});
 module.exports = router;

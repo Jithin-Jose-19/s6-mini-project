@@ -1,5 +1,6 @@
 let batchSelected = "";
 let classSelected="";
+let courseSelected=""
 $(document).ready(function () {
   //Open Drop Down
   $(".custom-select").click(function (e) {
@@ -88,6 +89,7 @@ $(document).ready(function () {
   function courseSelected() {
     console.log("Selected Course  : " + this.textContent);
     $(".open-dropdown .custom-select").val(this.textContent);
+    courseSelected=this.textContent;
     (async () => {
       const response = await fetch(
         "http://localhost:3000/faculty/getExperiments",
@@ -106,7 +108,9 @@ $(document).ready(function () {
       let courseLabel = document.getElementById("course-label");
       let courseNameSpan = document.getElementById("coursenamespan");
       courseNameSpan.textContent = this.textContent;
-
+      
+      let courseGearA=document.getElementById('course-gear-icon-a');
+      courseGearA.href="/faculty/home/report-download?batchFrom="+batchSelected.split('-')[0].trim()+"&courseCode="+courseSelected.split('-')[0]+"&className="+classSelected;
       var ul = document.getElementById("experiment-list");
       while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
