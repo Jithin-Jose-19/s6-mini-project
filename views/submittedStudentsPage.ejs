@@ -24,25 +24,19 @@
     <div class="expdiv">
         <% if (typeof expStuds[0] !== 'undefined') { %>
         <ul class="explist" id="experiment-list">
-        
-           <label style="padding: 50px;" id="course-label">
+          <label style="padding: 50px;" id="course-label">
           <span class="course-name-span" id="coursenamespan"><%= expStuds[0].batchFrom +"-"+(parseInt(expStuds[0].batchFrom)+4)+" > "+expStuds[0].className+" > "+expStuds[0].courseCode%></span>
-          
-            </label> 
-            
-        
+          </label> 
         
          <% expStuds.forEach(expStud => { %>
             <li onclick="viewCode('<%=expStud.id%>')">
                 <span class="name"><%= expStud.email %></span>
-             
-              </li>
-            <% }) %> 
-       
+            </li>
+          <% }) %> 
       </ul>
       <% }  else { %>
-        <h1>No submissions!</h1>
-        <% } %> 
+        <h1 style="color:white;">No submissions!</h1>
+      <% } %> 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/js/facultyhome.js"></script>
@@ -51,7 +45,6 @@
             window.location="/faculty/submitted-students/view-code?id="+id;
         }
         function reportDownload(id){
-          
           
         }
     </script>

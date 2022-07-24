@@ -4,6 +4,7 @@ const Experiment = require("../models/experiment.model");
 const UploadedCodeModel = require("../models/UploadedCode.model");
 const User = require("../models/user.model");
 
+
 router.get("/home", async (req, res, next) => {
   try {
     console.log(req.user);
@@ -174,13 +175,11 @@ router.get("/submitted-students", async (req, res, next) => {
 router.get("/submitted-students/view-code", async (req, res, next) => {
   try {
     const doc = await UploadedCodeModel.findById(req.query.id);
-
     console.log(doc);
-
-    res.render("viewCodePage", { codeDet: doc });
+    res.render("viewCodePage", { codeDet: doc , success : '' });
   } catch (error) {
     console.log(error);
-    res.render("viewCodePage");
+    res.render("viewCodePage",{success : ''});
   }
 });
 
@@ -196,14 +195,15 @@ router.post(
         outputMark: req.body["outputMark"],
         recordSubmissionMark: req.body["recordSubmissionMark"],
       },
-      function (err, doc) {
+      async function (err, doc) {
         if (err) {
           console.log(err);
         } else {
           console.log("Marks updated succesfully!");
           //TODO - Instead of redirecting render the same page with an alert("Mark updated successfully!")
-          res.redirect("/faculty/home");
         }
+        const doc2 = await UploadedCodeModel.findById(`${req.body["programId"]}`)
+        res.render("viewCodePage",{codeDet : doc2 , success:'Mark updated successfully'});
       }
     );
   }

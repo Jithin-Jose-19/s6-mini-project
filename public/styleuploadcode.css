@@ -5,3 +5,7 @@
 #codeUploadForm {
     margin-top : 10px;
 }
+
+body > a , body > h3 {
+    margin-left: 20px;
+}

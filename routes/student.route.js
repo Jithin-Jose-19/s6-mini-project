@@ -10,7 +10,7 @@ router.get("", (req, res, next) => {
 });
 router.get("/upload-code", (req, res, next) => {
   console.log(req.query);
-  res.render("uploadCode", { obj: req.query });
+  res.render("uploadCode", { obj: req.query  , success : ''});
 });
 
 router.get("/course-select", async (req, res, next) => {
@@ -96,7 +96,7 @@ router.post("/uploadCodeFile", async(req, res, next) => {
 
             axios
               .post("https://api.jdoodle.com/v1/execute", program)
-              .then(function (response) {
+              .then(async function (response) {
                 console.log(response.data["output"]);
 
                 if (response.data["output"] == value) {
@@ -120,8 +120,18 @@ router.post("/uploadCodeFile", async(req, res, next) => {
                     testCasePassed[1] == 1 &&
                     testCasePassed[2] == 1
                   ) {
-                    const codeObj = new uploadedCodeModel(obj);
-                    codeObj.save();
+                    const doc = await uploadedCodeModel.findOne({email : req.user.email , courseCode : obj["courseCode"] , experimentNumber : obj["experimentNumber"]})
+                    if(!doc){
+                      const codeObj = new uploadedCodeModel(obj);
+                      codeObj.save();
+                    }else{
+                      await uploadedCodeModel.updateOne({email : req.user.email , courseCode : obj["courseCode"] , experimentNumber : obj["experimentNumber"]},
+                      { batchFrom : obj["batchFrom"] , 
+                        batchTo : obj["batchTo"] , 
+                        className : obj["className"] , 
+                        code : obj["code"] , 
+                        language : obj["language"]})
+                    }
                   }
                   console.log(testCaseResult);
                   let obj1 = {};
@@ -131,6 +141,7 @@ router.post("/uploadCodeFile", async(req, res, next) => {
                   res.render("uploadCode", {
                     testCaseResult: testCaseResult,
                     obj: obj1,
+                    success : 'Code submitted successfully'
                   });
                 }
               })
