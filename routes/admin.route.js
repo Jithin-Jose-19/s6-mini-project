@@ -194,7 +194,6 @@ router.post("/course-upload", async (req, res, next) => {
           );
         }
       });
-      //   req.flash("success", "Your file is uploaded successfully and users are registered successfully");
       console.log(
         "Your file is uploaded successfully and users are registered successfully"
       );
@@ -204,7 +203,6 @@ router.post("/course-upload", async (req, res, next) => {
   } catch (error) {
     console.log(error);
     next(error);
-    // req.flash("error", `${error}`);
   }
   res.redirect("/");
 });

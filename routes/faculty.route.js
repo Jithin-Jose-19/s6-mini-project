@@ -3,7 +3,26 @@ const Course = require("../models/course.model");
 const Experiment = require("../models/experiment.model");
 const UploadedCodeModel = require("../models/UploadedCode.model");
 const User = require("../models/user.model");
+const XLSX = require('xlsx');
+const fs = require('fs');
 
+// router.get('/generate-report',async(req,res,next)=> {
+//   try {
+//     const workSheet = XLSX.utils.json_to_sheet(students);
+//     const workBook = XLSX.utils.book_new();
+
+//     XLSX.utils.book_append_sheet(workBook, workSheet, "students")
+//     // Generate buffer
+//     XLSX.write(workBook, { bookType: 'xlsx', type: "buffer" })
+
+//     // Binary string
+//     XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
+
+//     XLSX.writeFile(workBook, "studentsData.xlsx")
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 router.get("/home", async (req, res, next) => {
   try {
@@ -246,7 +265,23 @@ router.get("/home/report-download", async (req, res, next) => {
       });
     });
     console.log(report);
-   
-  } catch (error) {}
+    const workSheet = XLSX.utils.json_to_sheet(report);
+    const workBook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, "students")
+    // Generate buffer
+    XLSX.write(workBook, { bookType: 'xlsx', type: "buffer" })
+
+    // Binary string
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
+
+    XLSX.writeFile(workBook, "studentsData.xlsx")
+    res.download("studentsData.xlsx", (err) => {
+      if (err) throw err;
+      fs.unlinkSync("studentsData.xlsx");
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 module.exports = router;
