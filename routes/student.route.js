@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const request = require("request");
-const uploadedCodeModel = require("../models/UploadedCode.model");
+const uploadedCodeModel = require("../models/uploadedCode.model");
 const Course = require("../models/course.model");
 const Experiment = require("../models/experiment.model");
 const axios = require("axios").default;
