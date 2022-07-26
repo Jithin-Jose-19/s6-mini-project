@@ -200,7 +200,6 @@ router.post(
           console.log(err);
         } else {
           console.log("Marks updated succesfully!");
-          //TODO - Instead of redirecting render the same page with an alert("Mark updated successfully!")
         }
         const doc2 = await UploadedCodeModel.findById(`${req.body["programId"]}`)
         res.render("viewCodePage",{codeDet : doc2 , success:'Mark updated successfully'});

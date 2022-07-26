@@ -137,7 +137,6 @@ router.post("/uploadCodeFile", async(req, res, next) => {
                   let obj1 = {};
                   obj1["selectedCourse"] = req.body.selectedCourse.trim();
                   obj1["experimentNumber"] = req.body.experimentNumber.trim();
-                  //TODO - render the same page in a way that the status is "Code submitted succesfully" and All the test cases passsed Tick should be there
                   res.render("uploadCode", {
                     testCaseResult: testCaseResult,
                     obj: obj1,
@@ -177,7 +176,8 @@ router.post("/uploadCodeFile", async(req, res, next) => {
 module.exports = router;
 
 //Trial Code
-/*#include <stdio.h>
+/*
+#include <stdio.h>
 int main() {    
 
     int number1, number2, sum;
@@ -189,7 +189,8 @@ int main() {
     
     printf("%d",sum);
     return 0;
-}*/
+}
+*/
 
 // // C program for insertion sort
 // #include <math.h>
