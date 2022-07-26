@@ -2,7 +2,7 @@
     "name": "s6-mini-project",
     "version": "1.0.0",
     "description": "mini project for mits output verification",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
         "start" : "node app.js",
         "dev": "nodemon app.js"
