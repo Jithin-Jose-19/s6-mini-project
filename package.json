@@ -11,9 +11,6 @@
         "type": "git",
         "url": "git+https://github.com/Jithin-Jose-19/s6-mini-project.git"
     },
-    "engines": {
-        "node": "16.15.1"
-    },
     "keywords": [],
     "author": "Hariman",
     "license": "ISC",
