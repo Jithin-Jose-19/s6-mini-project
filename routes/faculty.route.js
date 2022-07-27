@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Course = require("../models/course.model");
 const Experiment = require("../models/experiment.model");
-const UploadedCodeModel = require("../models/UploadedCode.model");
+const UploadedCodeModel = require("../models/uploadedCode.model");
 const User = require("../models/user.model");
 const XLSX = require('xlsx');
 const fs = require('fs');
@@ -203,7 +203,6 @@ router.post(
           console.log(err);
         } else {
           console.log("Marks updated succesfully!");
-          //TODO - Instead of redirecting render the same page with an alert("Mark updated successfully!")
         }
         const doc2 = await UploadedCodeModel.findById(`${req.body["programId"]}`)
         res.render("viewCodePage",{codeDet : doc2 , success:'Mark updated successfully'});
