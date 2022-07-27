@@ -25,7 +25,7 @@ $(document).ready(function () {
       $(".custom-select-wrapper").removeClass("open-dropdown");
       batchSelected = current_value;
       (async () => {
-        const response = await fetch(request.headers.host+"/faculty/getClass", {
+        const response = await fetch("http://localhost:3000/faculty/getClass", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -62,7 +62,7 @@ $(document).ready(function () {
     $(".open-dropdown .custom-select").val(this.textContent);
     classSelected=this.textContent;
     (async () => {
-      const response = await fetch(request.headers.host+"/faculty/getCourses", {
+      const response = await fetch("http://localhost:3000/faculty/getCourses", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -92,7 +92,7 @@ $(document).ready(function () {
     courseSelected=this.textContent;
     (async () => {
       const response = await fetch(
-        request.headers.host+"/faculty/getExperiments",
+        "http://localhost:3000/faculty/getExperiments",
         {
           method: "POST",
           headers: {
