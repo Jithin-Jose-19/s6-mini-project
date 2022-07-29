@@ -83,7 +83,7 @@ router.post("/uploadCodeFile", async(req, res, next) => {
           ioMap.forEach(function (value, key) {
             var program = {
               script: code,
-              language: "c",
+              language: obj["language"],
               stdin: key,
               versionIndex: "0",
               clientId: "10b08afe3f797dcd5f7df7af153f8b01",
