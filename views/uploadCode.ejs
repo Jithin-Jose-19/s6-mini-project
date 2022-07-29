@@ -40,12 +40,12 @@
         <div id="t1" x>Test Case 1 : <%= testCaseResult.t1 %></div>
         <div>Test Case 2 : <%= testCaseResult.t2 %></div>
         <div>Test Case 3 : <%= testCaseResult.t3 %></div>
+        <form action="/student/course-select" method="post">
+          <input type="hidden" name="category" value="<%= obj.selectedCourse  %> ">
+          <input style="margin:5px;" type="submit" class="btn btn-primary" value="Submit another experiment">
+          <a style="margin:5px;" class="btn btn-dark" href="/">Back to home</a>
+        </form>
       </div>
-      <form action="/student/course-select" method="post">
-        <input type="hidden" name="category" value="<%= obj.selectedCourse  %> ">
-        <input style="margin:5px;" type="submit" class="btn btn-primary" value="Submit another experiment">
-        <a style="margin:5px;" class="btn btn-dark" href="/">Back to home</a>
-      </form>
     <% }%>
   </body>
   <!-- JavaScript Bundle with Popper -->
