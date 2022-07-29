@@ -3,9 +3,13 @@
 }
 
 #codeUploadForm {
-    margin-top : 10px;
+    margin-top : 7px;
 }
 
 body > a , body > h3 {
     margin-left: 20px;
+}
+
+.container {
+    margin-left : 10px;
 }

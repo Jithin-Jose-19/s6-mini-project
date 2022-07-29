@@ -22,7 +22,7 @@
         name="code"
         cols="150"
         rows="19"
-        style="overflow : auto;margin:5px"
+        style="overflow : auto;margin-top:1px"
         placeholder="paste your code here.."
       >
       </textarea>
@@ -42,8 +42,8 @@
         <div>Test Case 3 : <%= testCaseResult.t3 %></div>
         <form action="/student/course-select" method="post">
           <input type="hidden" name="category" value="<%= obj.selectedCourse  %> ">
-          <input style="margin:5px;" type="submit" class="btn btn-primary" value="Submit another experiment">
-          <a style="margin:5px;" class="btn btn-dark" href="/">Back to home</a>
+          <input style="margin:2px;margin-top:10px;margin-left:2px;" type="submit" class="btn btn-primary" value="Submit another experiment">
+          <a style="margin-top:10px;" class="btn btn-dark" href="/">Back to home</a>
         </form>
       </div>
     <% }%>
