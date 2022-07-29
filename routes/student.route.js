@@ -5,9 +5,6 @@ const Course = require("../models/course.model");
 const Experiment = require("../models/experiment.model");
 const axios = require("axios").default;
 
-router.get("", (req, res, next) => {
-  res.render("studentHome");
-});
 router.get("/upload-code", (req, res, next) => {
   console.log(req.query);
   res.render("uploadCode", { obj: req.query  , success : ''});
